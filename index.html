@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>گربه سخنگو</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(145deg, #f7f3e9, #e8e0d5);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+        .card {
+            background: #fff9f0;
+            border-radius: 48px 48px 32px 32px;
+            padding: 30px 24px 40px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            border: 2px solid #f0e3d0;
+        }
+        h1 {
+            font-size: 24px;
+            color: #6b4a3c;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .sub {
+            color: #a48d7a;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .cat-wrapper {
+            position: relative;
+            display: inline-block;
+            margin: 10px 0 16px;
+        }
+        .cat-avatar {
+            width: 150px;
+            height: 150px;
+            background: #f5d6b3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 90px;
+            border: 4px solid #dbb594;
+            box-shadow: 0 8px 0 #b28b6f, 0 12px 25px rgba(0, 0, 0, 0.2);
+            transition: 0.2s;
+            position: relative;
+        }
+        .outfit-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            padding: 4px 14px 4px 10px;
+            font-size: 22px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #fff;
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .outfit-badge span {
+            font-size: 14px;
+            color: #5a3f31;
+            font-weight: 600;
+        }
+        .speech-bubble {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 30px 30px 30px 8px;
+            margin: 16px 0 22px;
+            font-size: 18px;
+            color: #3d2c22;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border: 1px solid #eedbc9;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            background: #fefcf7;
+            font-weight: 500;
+            position: relative;
+        }
+        .speech-bubble:before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            right: 30px;
+            border: 10px solid transparent;
+            border-bottom-color: #fefcf7;
+        }
+        .wardrobe-title {
+            font-size: 16px;
+            color: #7b5f4d;
+            margin: 18px 0 12px;
+            font-weight: 600;
+            border-top: 2px dashed #e5d4c2;
+            padding-top: 18px;
+        }
+        .outfit-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+        .outfit-btn {
+            background: white;
+            border: 2px solid #e5d4c2;
+            border-radius: 60px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            color: #4d372a;
+            box-shadow: 0 2px 0 #d4bfab;
+            flex: 0 1 auto;
+        }
+        .outfit-btn:hover {
+            transform: scale(1.03);
+            background: #fcf5ed;
+            border-color: #c6ab94;
+        }
+        .outfit-btn:active {
+            transform: scale(0.96);
+            box-shadow: none;
+        }
+        .outfit-btn .emoji {
+            font-size: 26px;
+        }
+        .reset-area {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .reset-btn {
+            background: #efe3d7;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #4d372a;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+        .reset-btn:hover {
+            background: #e2d1c0;
+        }
+        .status-note {
+            font-size: 12px;
+            color: #b09580;
+            margin-top: 18px;
+            border-top: 1px solid #eee2d6;
+            padding-top: 14px;
+        }
+        #statusMsg {
+            color: #8f705b;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🐱 گربه سخنگو</h1>
+        <div class="sub">با گربه حرف بزن و لباساشو عوض کن</div>
+
+        <div class="cat-wrapper">
+            <div class="cat-avatar" id="catAvatar">🐈</div>
+            <div class="outfit-badge" id="outfitBadge">
+                <span id="outfitLabel">👕 تیشرت</span>
+            </div>
+        </div>
+
+        <div class="speech-bubble" id="speechBubble">
+            سلام! من گربۀ سخنگو هستم 😸
+        </div>
+
+        <div class="wardrobe-title">🧥 کمد لباس‌ها</div>
+        <div class="outfit-grid" id="outfitGrid"></div>
+
+        <div class="reset-area">
+            <button class="reset-btn" id="resetOutfitBtn">🔄 لباس پیش‌فرض</button>
+            <button class="reset-btn" id="randomTalkBtn">💬 حرف تصادفی</button>
+        </div>
+
+        <div class="status-note">
+            وضعیت: <span id="statusMsg">آماده</span>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const wardrobe = [
+                { id: 'tshirt', label: 'تیشرت', emoji: '👕' },
+                { id: 'hoodie', label: 'هودی', emoji: '🧥' },
+                { id: 'suit', label: 'کت و شلوار', emoji: '🤵' },
+                { id: 'dress', label: 'لباس مجلسی', emoji: '👗' },
+                { id: 'pajama', label: 'پیژامه', emoji: '🛏️' },
+                { id: 'none', label: 'برهنه!', emoji: '🐱' }
+            ];
+
+            const catTalks = [
+                "چطورین؟ 😸", "امروز هوا خوبه!", "یه موش دیدم اونجا!",
+                "بازم اومدی پیشم؟", "چای دوست داری؟ ☕", "من گربه‌ام، ممنون!",
+                "بیا بریم بیرون!", "این لباس قشنگه!", "صدای منو میشنوی؟",
+                "گربه‌ها برترند! 😼"
+            ];
+
+            const catAvatar = document.getElementById('catAvatar');
+            const speechBubble = document.getElementById('speechBubble');
+            const outfitGrid = document.getElementById('outfitGrid');
+            const outfitLabel = document.getElementById('outfitLabel');
+            const statusMsg = document.getElementById('statusMsg');
+            const resetOutfitBtn = document.getElementById('resetOutfitBtn');
+            const randomTalkBtn = document.getElementById('randomTalkBtn');
+
+            let currentOutfit = 'tshirt';
+
+            function setOutfit(outfitId) {
+                currentOutfit = outfitId;
+                const found = wardrobe.find(item => item.id === outfitId);
+                if (!found) return;
+
+                outfitLabel.innerHTML = `${found.emoji} ${found.label}`;
+                catAvatar.textContent = outfitId === 'none' ? '🐈‍⬛' : '🐈';
+                statusMsg.textContent = `لباس: ${found.label}`;
+
+                if (window.Kodular && window.Kodular.setWebViewString) {
+                    window.Kodular.setWebViewString(`outfit:${outfitId}`);
+                }
+
+                const reactions = {
+                    'tshirt': 'تیشرت راحته!',
+                    'hoodie': 'هودی گرمه!',
+                    'suit': 'مثل یه آقا! 😎',
+                    'dress': 'چقدر شیک!',
+                    'pajama': 'خوابم میاد...',
+                    'none': 'وای! برهنه شدم! 😳'
+                };
+                speechBubble.textContent = reactions[outfitId] || 'لباس جدید قشنگه!';
+            }
+
+            function randomTalk() {
+                const randomIndex = Math.floor(Math.random() * catTalks.length);
+                speechBubble.textContent = catTalks[randomIndex];
+                statusMsg.textContent = 'گربه حرف زد!';
+                if (window.Kodular && window.Kodular.setWebViewString) {
+                    window.Kodular.setWebViewString(`talk:${catTalks[randomIndex]}`);
+                }
+            }
+
+            function resetOutfit() {
+                setOutfit('tshirt');
+                speechBubble.textContent = 'لباس پیش‌فرض رو پوشیدم.';
+            }
+
+            function renderWardrobe() {
+                outfitGrid.innerHTML = '';
+                wardrobe.forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.className = 'outfit-btn';
+                    btn.innerHTML = `<span class="emoji">${item.emoji}</span> ${item.label}`;
+                    btn.addEventListener('click', function() {
+                        setOutfit(item.id);
+                        speechBubble.textContent = `لباس ${item.label} رو انتخاب کردم!`;
+                    });
+                    outfitGrid.appendChild(btn);
+                });
+            }
+
+            function init() {
+                renderWardrobe();
+                setOutfit('tshirt');
+                resetOutfitBtn.addEventListener('click', resetOutfit);
+                randomTalkBtn.addEventListener('click', randomTalk);
+
+                if (window.Kodular && window.Kodular.setWebViewString) {
+                    window.Kodular.setWebViewString('ready');
+                }
+                statusMsg.textContent = 'گربه آماده است!';
+            }
+
+            init();
+
+            window.addEventListener('message', function(e) {
+                console.log('پیام از Kodular:', e.data);
+                if (e.data && e.data.startsWith('changeOutfit:')) {
+                    const outfitId = e.data.split(':')[1];
+                    setOutfit(outfitId);
+                    speechBubble.textContent = `گربه لباس ${outfitId} رو پوشید.`;
+                }
+            });
+
+            if (window.Kodular && window.Kodular.getWebViewString) {
+                const initialString = window.Kodular.getWebViewString();
+                if (initialString && initialString.startsWith('outfit:')) {
+                    const outfitId = initialString.split(':')[1];
+                    setOutfit(outfitId);
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
